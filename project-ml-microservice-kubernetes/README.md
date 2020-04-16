@@ -1,42 +1,73 @@
-<include a CircleCI status badge, here>
+[![CircleCI](https://circleci.com/gh/softveda/udacity-microservices.svg?style=svg)](https://circleci.com/gh/softveda/udacity-microservices)
 
-## Project Overview
+# Housing Price Predictor App
 
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
+This is a Python flask app that serves out predictions (inference) about housing prices in Boston through API calls.
 
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
-
-### Project Tasks
-
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-* Complete a Dockerfile to containerize this application
-* Deploy your containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
-
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
-
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
+The app uses a pre-trained, *sklearn* model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. The data was initially taken from Kaggle, on the [data source site](https://www.kaggle.com/c/boston-housing). 
 
 ---
 
-## Setup the Environment
+## Running the App
+1. Open a terminal and clone the project repository, then  navigate to the project folder. 
+```bash
+git clone https://github.com/softveda/udacity-microservices.git
+cd udacity-microservices/project-ml-microservice-kubernetes
+```
 
-* Create a virtualenv and activate it
-* Run `make install` to install the necessary dependencies
+2. Create (and activate) a new virtual environment with Python 
+```bash
+make setup
+```
 
-### Running `app.py`
+3. Install dependencies 
+```bash
+make install
+```
 
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+4. Run the app
+```bash
+ python3 app.py
+```
+This should write some logs to terminal like  
+```
+* Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 202-879-013
+```
+*Note: You have to change the hosting port of the app from 80 to 8000*
 
-### Kubernetes Steps
+5. Make a prediction  
+Open another terminal and run
+```bash
+./make_prediction.sh
+``` 
 
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+This should log the Prediction value returned from the app
+
+```json
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
+```
+
+---
+## Project Files
+
+- **Makefile** - This is Makefile that has the setup and installation tasks that can be run using the *make* utility
+- **requirments.txt** - This is the list of dependencies  (Python libraies) that are isntalled using the *pip* utility
+- **app.py** - This is the Python Flask web application
+- **Dockerfile** - This is thr docker build file to containerize the app inside Docker
+- **Shell scripts**
+  - **run_docker.sh** - This script will build the Docker image of the app and run the app inside the container
+  - **upload_docker.sh** - This script upload the Docker image to Docker hub repository
+  - **run_kubernetes.sh** - This script deploys the Docker image to a Kubernetes cluster and runs the app in pods.
