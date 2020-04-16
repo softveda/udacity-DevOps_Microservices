@@ -9,7 +9,7 @@ The app uses a pre-trained, *sklearn* model that has been trained to predict hou
 ---
 
 ## Running the App
-1. Open a terminal and clone the project repository, then  navigate to the project folder. 
+1. Open a terminal and clone the project repository, then navigate to the project folder. 
 ```bash
 git clone https://github.com/softveda/udacity-microservices.git
 cd udacity-microservices/project-ml-microservice-kubernetes
@@ -29,6 +29,8 @@ make install
 ```bash
  python3 app.py
 ```
+*Note: You will have to change the hosting port of the app from 80 to 8000*
+
 This should write some logs to terminal like  
 ```
 * Serving Flask app "app" (lazy loading)
@@ -41,7 +43,7 @@ This should write some logs to terminal like
  * Debugger is active!
  * Debugger PIN: 202-879-013
 ```
-*Note: You have to change the hosting port of the app from 80 to 8000*
+
 
 5. Make a prediction  
 Open another terminal and run
@@ -64,9 +66,9 @@ Port: 8000
 ## Project Files
 
 - **Makefile** - This is Makefile that has the setup and installation tasks that can be run using the *make* utility
-- **requirments.txt** - This is the list of dependencies  (Python libraies) that are isntalled using the *pip* utility
+- **requirements.txt** - This is the list of dependencies  (Python libraies) that are installed using the *pip* utility
 - **app.py** - This is the Python Flask web application
-- **Dockerfile** - This is thr docker build file to containerize the app inside Docker
+- **Dockerfile** - This is the Docker build file to containerize the app as a Docker image
 - **Shell scripts**
   - **run_docker.sh** - This script will build the Docker image of the app and run the app inside the container
   - **upload_docker.sh** - This script upload the Docker image to Docker hub repository
